@@ -5,7 +5,7 @@ class prey extends Vehicle{
     position = _p;
     acc = new PVector(0, 0);
     vel = new PVector(0, 0);
-    size = 3;
+    size = 5;
     maxforce = _maxforce;
     maxspeed = _maxspeed;
     oldspeed = _maxspeed;
@@ -70,7 +70,7 @@ class prey extends Vehicle{
    void display() {
   //Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90 degrees.
    float theta = vel.heading() + PI/2;
-    fill(175);
+    fill(#FFFFFF);
     stroke(0);
     pushMatrix();
     translate(position.x,position.y);

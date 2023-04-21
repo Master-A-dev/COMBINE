@@ -4,7 +4,7 @@ class hunter extends Vehicle {
     position = _p;
     acc = new PVector(0, 0);
     vel = new PVector(0, 0);
-    size = 3.0;
+    size = 5;
     maxforce = _maxforce;
     maxspeed = _maxspeed;
     oldspeed = _maxspeed;
@@ -27,12 +27,12 @@ class hunter extends Vehicle {
     } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) { //Starts the fleeing behavior
       seek(_target);
       maxspeed *= 1.01; //Makes the hunter move faster when it hunts
-      print("hunt");
+      //print("hunt");
     } else if (millis() - timer > counter) {   //starts the animals wandering behavior 
       maxspeed = oldspeed;
       wander();
       timer = millis();
-      print("Wander");
+      //print("Wander");
     }
 
 

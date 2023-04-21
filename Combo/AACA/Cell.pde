@@ -4,7 +4,7 @@ class Cell {
   int columns;
   int rows;
 
-  int w = 10; //angiver størrelse
+  int w = 16; //angiver størrelse
 
   Cell() {
 
@@ -24,7 +24,7 @@ class Cell {
         } else { // bliver til jord hvis den ikke bliver nogle af de andre
           board[x][y] = 0;
         }
-        println(board[x][y]); // Printer værdien af cellerne i starten til bug fixing
+       // println(board[x][y]); // Printer værdien af cellerne i starten til bug fixing
       }
     }
   }
@@ -77,7 +77,8 @@ class Cell {
     for (int i = 0; i < columns; i++) {
       for (int j = 0; j < rows; j++) {
         if (board[i][j] == 1) { //græs
-          fill(#4CCE2A);
+          //fill(#4CCE2A);
+          fill(#40AA23);
         } else if (board[i][j] == 2) { //groende græs
           fill(#6BE54A);
           //fill(#DE0000); //til debug n shit af græs
