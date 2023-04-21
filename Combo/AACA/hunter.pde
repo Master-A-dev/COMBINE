@@ -59,7 +59,18 @@ class hunter extends Vehicle {
     desired.mult(maxspeed);
   }
 
+  void onCell(Cell _target) {
+    int x = int(position.x/_target.w);
+    int y = int(position.y/_target.w);
 
+    if (x > 0 && x < _target.columns && y > 0 && y < _target.rows) {
+      textAlign(CENTER);
+      textSize(100);
+      fill(0);
+      text(_target.board[x][y], width/2, height/2);
+      print(_target.board[x][y]);
+    }
+  }
 
   void display() {
     //image(pic,position.x,position.y);

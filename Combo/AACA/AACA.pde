@@ -9,7 +9,7 @@ fullScreen();
 //size(640, 480);
 
 
-hunter = new hunter(new PVector(random(width),random(height)), 6, 0.6, 300);
+hunter = new hunter(new PVector(random(width),random(height)), 6, 0.6, 500);
 prey = new prey(new PVector(random(width),random(height)), 6, 0.6, 100);
 Cell = new Cell();
 }
@@ -26,10 +26,12 @@ Cell.generate();
 hunter.move(prey);
 hunter.update();
 hunter.display();
+hunter.onCell(Cell);
 
 prey.move(hunter);
 prey.display();
 prey.update();
+
 
 
 }

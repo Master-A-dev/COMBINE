@@ -28,6 +28,7 @@ void update() {
   void flee(Vehicle _target) {}
   void display() {}
   void wander(){}
+  void onCell(Cell _target){}
   
   void applyForce(PVector force) {
     acc.add(force);

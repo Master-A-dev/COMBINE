@@ -31,7 +31,7 @@ class prey extends Vehicle{
 
       maxspeed *= 1.06; //Makes the pray move faster when it flees
 
-      maxspeed *= 1.1; 
+
 
     } 
      else if (millis() - timer > counter) {   
