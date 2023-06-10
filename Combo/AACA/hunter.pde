@@ -14,33 +14,18 @@ class hunter extends Vehicle {
     counter = 500;
   }
 
+  void onCell(Cell _target) {
+    int x = int(position.x/_target.w);
+    int y = int(position.y/_target.w);
 
-
-  void move(Vehicle _target) {
-
-    if ((position.x > width) || (position.x < 0)) {  //border on x
-      vel.x = vel.x * -1;
-      desired.x *= -1;
-    } else if ((position.y > height) || (position.y < 0)) {  //border on y
-      vel.y = vel.y * -1;
-      desired.y *= -1;
-    } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) { //Starts the fleeing behavior
-      seek(_target);
-      maxspeed *= 1.01; //Makes the hunter move faster when it hunts
-      //print("hunt");
-    } else if (millis() - timer > counter) {   //starts the animals wandering behavior 
-      maxspeed = oldspeed;
-      wander();
-      timer = millis();
-      //print("Wander");
+    if (x > 0 && x < _target.columns && y > 0 && y < _target.rows) {
     }
-
-
-
-
-    PVector steer = PVector.sub(desired, vel);
-    steer.limit(maxforce);
-    applyForce(steer);
+    if (_target.board[x][y] < 1) {
+      maxspeed *= 1;
+    }
+    if (_target.board[x][y] > 3) {
+      maxspeed *= 0.95;
+    }
   }
 
   void seek(Vehicle _target) {
@@ -48,6 +33,35 @@ class hunter extends Vehicle {
     desired.normalize();
     desired.mult(maxspeed);
   }
+
+  void move(Vehicle _target) {
+
+    if ((position.x > width - 100) || (position.x < 100)) {  //border on x
+      vel.x = vel.x * -1;
+      desired.x *= -1;
+    } else if ((position.y > height - 100) || (position.y < 100)) {  //border on y
+      vel.y = vel.y * -1;
+      desired.y *= -1;
+    } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) {  //hunting behavior if target is inside a given range
+      seek(_target);
+      maxspeed *= 1.01;
+    } else if (millis() - timer > counter) {    //starts the animals wandering behavior
+      maxspeed = oldspeed;
+      wander();
+      timer = millis();
+    }
+    if (hunger > 0) {
+      hunger -= 0.5;
+    }
+    if (dist(_target.position.x, _target.position.y, position.x, position.y) <= 15) {
+      hunger += 50;
+    }
+    PVector steer = PVector.sub(desired, vel);
+    steer.limit(maxforce);
+    applyForce(steer);
+  }
+
+
 
   void wander() {    //makes the target move to a new point via polar vectors
     float r = 20.5;
@@ -59,16 +73,13 @@ class hunter extends Vehicle {
     desired.mult(maxspeed);
   }
 
-  void onCell(Cell _target) {
-    int x = int(position.x/_target.w);
-    int y = int(position.y/_target.w);
 
-    if (x > 0 && x < _target.columns && y > 0 && y < _target.rows) {
-      textAlign(CENTER);
-      textSize(100);
-      fill(0);
-      text(_target.board[x][y], width/2, height/2);
-      print(_target.board[x][y]);
+  boolean fullHunger() {
+    if (hunger >= 100) {
+      hunger -= 50;
+      return true;
+    } else {
+      return false;
     }
   }
 

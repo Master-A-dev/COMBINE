@@ -4,7 +4,7 @@ class Cell {
   int columns;
   int rows;
 
-  int w = 16; //angiver størrelse
+  int w = 20; //angiver størrelse
 
   Cell() {
 
@@ -67,6 +67,8 @@ class Cell {
         else if ((board[x][y] > 0) && (swamp <  4)) next[x][y] = 6;
         else if ((board[x][y] > 0) && (swamp >  2)) next[x][y] = 6;
         else if ((board[x][y] == 0) && (swamp == 3)) next[x][y] = 6;
+        
+       
       }
     }
     board = next; //laver det næste board der er blevet udregnet til det nuværende board der bliver displayet

@@ -11,7 +11,8 @@ abstract class Vehicle {
   float range;
   int timer;
   int counter;
-  
+  int hunger;
+  int terrain;
 
 
 
@@ -24,11 +25,15 @@ void update() {
 
 
   void seek(Vehicle _target) {}
+  void terrain(Cell _target) {}
   void move(Vehicle _target){}
   void flee(Vehicle _target) {}
   void display() {}
   void wander(){}
   void onCell(Cell _target){}
+  boolean isEaten(Vehicle _target){ return false; }
+  boolean fullHunger() { return false; } 
+  void eat(){}
   
   void applyForce(PVector force) {
     acc.add(force);
