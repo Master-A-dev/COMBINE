@@ -4,7 +4,7 @@ class Cell {
   int columns;
   int rows;
 
-  int w = 20; //angiver størrelse
+  int w = 32; //angiver størrelse
 
   Cell() {
 
@@ -24,7 +24,7 @@ class Cell {
         } else { // bliver til jord hvis den ikke bliver nogle af de andre
           board[x][y] = 0;
         }
-       // println(board[x][y]); // Printer værdien af cellerne i starten til bug fixing
+        // println(board[x][y]); // Printer værdien af cellerne i starten til bug fixing
       }
     }
   }
@@ -56,7 +56,7 @@ class Cell {
         if      ((board[x][y] > 0) && (neighboors <  2) && (board[x][y] < 3)) next[x][y] = 0;
         else if ((board[x][y] > 0) && (neighboors >  3) && (board[x][y] < 3)) next[x][y] = 1;
         else if ((board[x][y] == 0) && (neighboors == 3) && (board[x][y] < 3)) next[x][y] = int(random(1, 3));
-        
+
 
         //Vand
         else if ((board[x][y] > 0) && (water <  2)) next[x][y] = 0;
@@ -67,8 +67,6 @@ class Cell {
         else if ((board[x][y] > 0) && (swamp <  4)) next[x][y] = 6;
         else if ((board[x][y] > 0) && (swamp >  2)) next[x][y] = 6;
         else if ((board[x][y] == 0) && (swamp == 3)) next[x][y] = 6;
-        
-       
       }
     }
     board = next; //laver det næste board der er blevet udregnet til det nuværende board der bliver displayet
@@ -88,7 +86,7 @@ class Cell {
           fill(#338CFC);
         } else if (board[i][j] == 6) { //sump
           fill(#29890A);
-        } else if (board[i][j] == 0){ //jord
+        } else if (board[i][j] == 0) { //jord
           fill(#90630D);
         }
         stroke(0);

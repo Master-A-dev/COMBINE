@@ -8,17 +8,17 @@ int targetObj;
 float oldD = width * height;
 float newD;
 boolean wasEaten = false; //tells if a prey was eaten
-int whoEaten; //tels which one was eaten
+int whoEaten; //tells which one was eaten
 int time = 0;  //Makes so the preloader kan reset
 int timer;     //A timer that works with counter
-int counter = 50;  //How often the game goes through a new generation
-int preloadtime = 20000;  //How long it goes through a new generation every frame (How long the "preloader" is active)
+int counter = 500;  //How often the game goes through a new generation
+int preloadtime = 10000;  //How long it goes through a new generation every frame (How long the "preloader" is active)
 
 
-void setup(){
-frameRate(60);
-fullScreen();
-//size(640, 480);
+void setup() {
+  frameRate(60);
+  fullScreen();
+  //size(640, 480);
 
 
 
@@ -27,17 +27,17 @@ fullScreen();
     newPrey.add(new prey(new PVector(width/4, height/4), 6, 0.6, 100));
     closes.add(width*height*0.9);
   }
-hunter = new hunter(new PVector (width/2, height/2), 6, 3, 300);
-Cell = new Cell();
+  hunter = new hunter(new PVector (width/2, height/2), 6, 3, 400);
+  Cell = new Cell();
 }
 
 
 
 
-void draw(){
-background(0);
+void draw() {
+  background(0);
 
-Cell.cellDraw();
+  Cell.cellDraw();
   if (millis() < preloadtime) {  //Goes through a new generation every frame for a certain amount of time
     Cell.generate();
   } else if (millis()-timer > counter) { // a timer
@@ -46,7 +46,7 @@ Cell.cellDraw();
   } 
 
 
-for (int i = newPrey.size()-1; i >= 0; i--) { //runs the prey
+  for (int i = newPrey.size()-1; i >= 0; i--) { //runs the prey
     Vehicle nextPrey = newPrey.get(i);
     nextPrey.move(hunter);
     nextPrey.update();
@@ -57,10 +57,10 @@ for (int i = newPrey.size()-1; i >= 0; i--) { //runs the prey
       whoEaten = i;
       print(" "+i+" was eaten");
     }
-    if (nextPrey.fullHunger()){
+    if (nextPrey.fullHunger()) {
       newPrey.add(new prey(new PVector(random(300, 1600), random(200, 900)), 6, 0.6, 100));
       closes.add(width*height*0.9);
-      print("sex");
+      print("newPrey");
     }
 
 
@@ -72,7 +72,7 @@ for (int i = newPrey.size()-1; i >= 0; i--) { //runs the prey
     }
   }
 
- hunter.move(newPrey.get(targetObj));
+  hunter.move(newPrey.get(targetObj));
   oldD = width*height; // resets oldD
   hunter.update();
   hunter.display();
@@ -83,7 +83,6 @@ for (int i = newPrey.size()-1; i >= 0; i--) { //runs the prey
     print(preySize);
     newPrey.set(whoEaten, newPrey.get(preySize)); 
     newPrey.remove(preySize);
-    closes.remove(preySize); 
+    closes.remove(preySize);
   }
-
 }

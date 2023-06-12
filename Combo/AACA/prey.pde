@@ -1,7 +1,7 @@
-class prey extends Vehicle{
+class prey extends Vehicle {
 
-  
-  prey(PVector _p,float _maxspeed, float _maxforce, float _range){
+
+  prey(PVector _p, float _maxspeed, float _maxforce, float _range) {
     position = _p;
     acc = new PVector(0, 0);
     vel = new PVector(0, 0);
@@ -12,81 +12,83 @@ class prey extends Vehicle{
     range = _range;
     desired = new PVector(width/2, height/2);
     timer = millis();
+    Btimer = millis();
     counter = 500;
-    
+    Bcounter = 50;
   }
-  
+
   void onCell(Cell _target) {
     int x = int(position.x/_target.w);
     int y = int(position.y/_target.w);
 
     if (x > 0 && x < _target.columns && y > 0 && y < _target.rows) {
     }
-    if (_target.board[x][y] < 3){
-    maxspeed *= 1;
+    if (_target.board[x][y] < 3) {
+      maxspeed *= 1;
     }
-    if (_target.board[x][y] >= 3){
-    maxspeed *= 0.95;
+    if (_target.board[x][y] >= 3) {
+      maxspeed = 1.5;
     }
-    if (_target.board[x][y] == 1){
-    hunger += 2;
-    _target.board[x][y] = 0;
+    if (_target.board[x][y] == 1) {
+      hunger += 2;
+      _target.board[x][y] = 0;
     }
   }
 
- 
-  
+
+
   void move(Vehicle _target) {
-     if ((position.x > width - 100) || (position.x < 100)) {  //border on x
+    if ((position.x > width - 50) || (position.x < 50)) {  //border on x
       vel.x = vel.x * -1;
       desired.x *= -1;
-    } else if ((position.y > height - 100) || (position.y < 100)) {  //border on y
+      Btimer = millis();
+      print("border x");
+    } else if ((position.y > height - 50) || (position.y < 50)) {  //border on y
       vel.y = vel.y * -1;
       desired.y *= -1;
-    }
-      else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) { //Starts the fleeing behavior
+      Btimer = millis();
+      print("border y");
+    } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) { //Starts the fleeing behavior
       flee(_target);
-      maxspeed *= 1.01; //Makes the pray move faster when it flees
-    } 
-    else if (millis() - timer > counter) {   //starts the animals wandering behavior 
+      maxspeed *= 1.04; //Makes the pray move faster when it flees
+    } else if (millis() - timer > counter) {   //starts the animals wandering behavior 
       wander();
       timer = millis();
       if (hunger > 0) {
         hunger -= 1;
       }
-
     }
 
 
     if (dist(position.x, position.y, _target.position.x, _target.position.y) > _target.range*2) { // makes so the prey stop running fast when the hunter is not there
       maxspeed = oldspeed;
     }
-  
- PVector steer = PVector.sub(desired, vel);  //makes the animal move
+
+    PVector steer = PVector.sub(desired, vel);  //makes the animal move
     steer.limit(maxforce);
     applyForce(steer);
   }
-  
-  
+
+
   void flee(Vehicle _target) {
     desired = PVector.sub(_target.position, position).mult(-1);
     desired.normalize();
     desired.mult(maxspeed);
   }
-  
+
   void wander() {    //makes the target move to a new point via polar vectors
     float r = 20.5;
     float x = r*cos(random(360));
     float y = r*sin(random(360));
-    
+
     desired.sub(new PVector(x, y));
     desired.normalize();
     desired.mult(maxspeed);
   }
-  
-   boolean isEaten(Vehicle _target) { //determins if ther herbivore is eaten or not
+
+  boolean isEaten(Vehicle _target) { //determins if ther herbivore is eaten or not
     if (dist(_target.position.x, _target.position.y, position.x, position.y) <= 15) {
-       return true;
+      return true;
     } else {
       return false;
     }
@@ -99,21 +101,21 @@ class prey extends Vehicle{
       return false;
     }
   }
-  
-  
-   void display() {
-  //Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90 degrees.
-   float theta = vel.heading() + PI/2;
+
+
+  void display() {
+    //Vehicle is a triangle pointing in the direction of velocity; since it is drawn pointing up, we rotate it an additional 90 degrees.
+    float theta = vel.heading() + PI/2;
     fill(#FFFFFF);
     stroke(0);
     pushMatrix();
-    translate(position.x,position.y);
+    translate(position.x, position.y);
     rotate(theta);
     beginShape();
     vertex(0, -size*4);
     vertex(-size*2, size*4);
     vertex(size*2, size*4);
     endShape(CLOSE);
-    popMatrix(); 
+    popMatrix();
   }
 }

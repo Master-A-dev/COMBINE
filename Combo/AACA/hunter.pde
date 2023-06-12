@@ -11,7 +11,9 @@ class hunter extends Vehicle {
     range = _range;
     desired = new PVector(width/2, height/2);
     timer = millis();
+    Btimer = millis();
     counter = 500;
+    Bcounter = 50;
   }
 
   void onCell(Cell _target) {
@@ -24,7 +26,7 @@ class hunter extends Vehicle {
       maxspeed *= 1;
     }
     if (_target.board[x][y] > 3) {
-      maxspeed *= 0.95;
+      maxspeed = 2;
     }
   }
 
@@ -36,22 +38,26 @@ class hunter extends Vehicle {
 
   void move(Vehicle _target) {
 
-    if ((position.x > width - 100) || (position.x < 100)) {  //border on x
+    if ((position.x > width - 50) || (position.x < 50)) {  //border on x
       vel.x = vel.x * -1;
       desired.x *= -1;
-    } else if ((position.y > height - 100) || (position.y < 100)) {  //border on y
+      Btimer = millis();
+      print("border x");
+    } else if ((position.y > height - 50) || (position.y < 50)) {  //border on y
       vel.y = vel.y * -1;
       desired.y *= -1;
+      Btimer = millis();
+      print("border y");
     } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) {  //hunting behavior if target is inside a given range
       seek(_target);
-      maxspeed *= 1.01;
+      maxspeed *= 1.03;
     } else if (millis() - timer > counter) {    //starts the animals wandering behavior
       maxspeed = oldspeed;
       wander();
       timer = millis();
-    }
-    if (hunger > 0) {
-      hunger -= 0.5;
+      if (hunger > 0) {
+        hunger -= 0.5;
+      }
     }
     if (dist(_target.position.x, _target.position.y, position.x, position.y) <= 15) {
       hunger += 50;
@@ -76,6 +82,7 @@ class hunter extends Vehicle {
 
   boolean fullHunger() {
     if (hunger >= 100) {
+      print ("full hunger");
       hunger -= 50;
       return true;
     } else {
