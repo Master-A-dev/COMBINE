@@ -4,7 +4,7 @@ class Cell {
   int columns;
   int rows;
 
-  int w = 32; //angiver størrelse
+  int w = 28; //angiver størrelse
 
   Cell() {
 
