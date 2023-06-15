@@ -14,7 +14,6 @@ abstract class Vehicle {
   int counter;
   int Bcounter;
   int hunger;
-  int terrain;
 
 
 
@@ -27,8 +26,6 @@ abstract class Vehicle {
 
 
   void seek(Vehicle _target) {
-  }
-  void terrain(Cell _target) {
   }
   void move(Vehicle _target) {
   }

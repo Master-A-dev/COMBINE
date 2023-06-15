@@ -50,7 +50,7 @@ class hunter extends Vehicle {
       print("border y");
     } else if (dist(position.x, position.y, _target.position.x, _target.position.y) < range) {  //hunting behavior if target is inside a given range
       seek(_target);
-      maxspeed *= 1.03;
+      maxspeed *= 1.02;
     } else if (millis() - timer > counter) {    //starts the animals wandering behavior
       maxspeed = oldspeed;
       wander();
@@ -99,9 +99,9 @@ class hunter extends Vehicle {
     translate(position.x, position.y);
     rotate(theta);
     beginShape();
-    vertex(0, -size*4);
-    vertex(-size*2, size*4);
-    vertex(size*2, size*4);
+    vertex(0, -size*5);
+    vertex(-size*3, size*5);
+    vertex(size*3, size*5);
     endShape(CLOSE);
     popMatrix();
   }
